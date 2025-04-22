@@ -26,7 +26,7 @@ public class Rol {
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuarios usuario;
 
 }
