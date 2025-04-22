@@ -26,20 +26,20 @@ public class UsuariosServicio {
         return usuariosRepositorio.findAll();
     }
 
-    public Usuarios getById(Long id) {
+    public Usuarios getById(Integer id) {
         return usuariosRepositorio.findById(id).orElse(null);
     }
 
-    public Usuarios update(Long id, Usuarios usuario) {
+    public Usuarios update(Integer id, Usuarios usuario) {
         Usuarios usuarioExistente = usuariosRepositorio.findById(id).orElse(null);
         if (usuarioExistente != null) {
-            usuario.setId(id);
+            usuario.setIdUsuarios(id);
             return usuariosRepositorio.save(usuario);
         }
         return null;
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         usuariosRepositorio.deleteById(id);
     }
 }

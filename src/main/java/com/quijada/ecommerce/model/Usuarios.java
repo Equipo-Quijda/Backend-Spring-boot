@@ -29,8 +29,7 @@ public class Usuarios {
     @Column(name = "password", nullable = false)
     private String password;
 
-    //LLave foranea
-    @Column(name = "pedidos", nullable = false)
-    private int pedidos;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Rol> roles;
 
 }
