@@ -16,26 +16,26 @@ public class UsuariosControlador {
 
     @PostMapping
     public Usuarios create(@RequestBody Usuarios usuario) {
-        return UsuariosServicio.create(usuario);
+        return usuariosServicio.create(usuario);
     }
 
     @GetMapping
     public List<Usuarios> getAll() {
-        return UsuariosServicio.getAll();
+        return usuariosServicio.getAll();
     }
 
     @GetMapping("/{id}")
-    public Usuarios getById(@PathVariable Long id) {
-        return UsuariosServicio.getById(id);
+    public Usuarios getById(@PathVariable Integer id) {
+        return usuariosServicio.getById(id);
     }
 
     @PutMapping("/{id}")
-    public Usuarios update(@PathVariable Long id, @RequestBody Usuarios usuario) {
-        return UsuariosServicio.update(id, usuario);
+    public Usuarios update(@PathVariable Integer id, @RequestBody Usuarios usuario) {
+        return usuariosServicio.update(id, usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        UsuariosServicio.delete(id);
+    public void delete(@PathVariable Integer id) {
+        usuariosServicio.delete(id);
     }
 }
