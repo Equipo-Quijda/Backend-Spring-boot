@@ -1,6 +1,8 @@
 package com.quijada.ecommerce.service;
 
+import com.quijada.ecommerce.model.Categorias;
 import com.quijada.ecommerce.model.Productos;
+import com.quijada.ecommerce.repository.CategoriasRepository;
 import com.quijada.ecommerce.repository.ProductosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +14,25 @@ import java.util.Optional;
 @Service
 public class ProductosServicio {
     private final ProductosRepositorio productosRepositorio;
+    private final CategoriasRepository categoriasRepository;
 
     @Autowired
-    public ProductosServicio(ProductosRepositorio productosRepositorio) { this.productosRepositorio = productosRepositorio;}
+    public ProductosServicio(ProductosRepositorio productosRepositorio, CategoriasRepository categoriasRepository) {
+        this.productosRepositorio = productosRepositorio;
+        this.categoriasRepository = categoriasRepository;
+    }
 
     public List<Productos> listarProductos () { return productosRepositorio.findAll();}
 
     // Agregar un nuevo producto
-    public Productos agregarProducto(Productos producto){
+    public Productos agregarProducto(Productos producto) {
+        if (producto.getId_categoria() != null) {
+            Categorias categoria = categoriasRepository.findById(producto.getId_categoria())
+                    .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
+            producto.setCategorias(categoria);
+            categoria.getProductos().add(producto);
+            //producto.setId_categoria(categoria.setId_categoria());
+        }
         return productosRepositorio.save(producto);
     }
 
@@ -66,11 +79,9 @@ public class ProductosServicio {
         if (detallesProducto.getPrecio() != null)producto.setPrecio(detallesProducto.getPrecio());
         if (detallesProducto.getInventario() != null)producto.setInventario(detallesProducto.getInventario());
         if (detallesProducto.getImagen_url() != null)producto.setImagen_url(detallesProducto.getImagen_url());
-        if (detallesProducto.getId_categoria() != null)producto.setId_categoria(detallesProducto.getId_categoria());
+        if (detallesProducto.getCategorias() != null)producto.setCategorias(detallesProducto.getCategorias());
         return productosRepositorio.save(producto);
     }
-
-
 }
 
 
