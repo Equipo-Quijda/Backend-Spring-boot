@@ -17,7 +17,6 @@ public class RolesServicio {
         this.rolesRepositorio = rolesRepositorio;
     }
 
-
     public List<Roles> listarRoles () { return rolesRepositorio.findAll();}
 
 }
