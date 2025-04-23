@@ -2,6 +2,7 @@ package com.quijada.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,10 @@ public class Productos {
     @JoinColumn(name = "id_categoria", nullable = false)
     @JsonBackReference
     private Categorias categorias;
+
+    @OneToMany(mappedBy = "productos", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Pedido> pedido;
 
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
