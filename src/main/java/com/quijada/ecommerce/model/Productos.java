@@ -30,13 +30,11 @@ public class Productos {
     private Integer inventario;
     @Column(name = "imagen_url", nullable = false)
     private String imagen_url;
-    @Column(name = "id_categoria", nullable = false)
-    private Integer id_categoria;
+    @Column(name = "fecha_creacion")
+    private Date fecha_creacion;
 
-//    @OneToMany()
-//    private List<Categorias> id_categoria;
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "categorias_category_id", nullable = false)
+    private Categorias categoria;
 
 }

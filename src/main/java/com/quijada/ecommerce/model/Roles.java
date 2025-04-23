@@ -6,23 +6,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="categorias")
+@Table(name = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Categorias {
+public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id", unique = true, nullable = false)
-    private int category_id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "idrol", unique = true, nullable = false)
+    private Integer idrol;
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Productos> productos;
-
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Usuarios> usuarios;
 }
