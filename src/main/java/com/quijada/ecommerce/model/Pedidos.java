@@ -20,8 +20,6 @@ public class Pedidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedidos", unique = true, nullable = false)
     private Integer id_pedidos;
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
     @Column(name = "dir_envio", nullable = false)
     private String dir_envio;
     @Column(name = "total", nullable = false)

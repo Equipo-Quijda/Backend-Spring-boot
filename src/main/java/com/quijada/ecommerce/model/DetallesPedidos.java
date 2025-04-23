@@ -29,8 +29,8 @@ public class DetallesPedidos {
     @Column(name = "total", nullable = false)
     private Double total;
 
-    @Column(name = "id_producto", nullable = false)
-    private Integer id_producto;
+    @Column(name = "productos_id_producto", nullable = false)
+    private Integer productos_id_producto;
 
     @ManyToOne
     @JoinColumn(name = "pedidos_id_pedidos", nullable = false)
