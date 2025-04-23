@@ -28,17 +28,13 @@ public class RolServicio {
 
     // Agregar un rol
     public Rol addRol(Rol rol) {
-        // Verificar que el usuario existe
+
         Usuarios usuario = usuariosRepositorio.findById(rol.getIdUsuario())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + rol.getIdUsuario()));
 
-        // Asignar el usuario al rol
         rol.setUsuario(usuario);
-
-        // Guardar el rol
         Rol rolGuardado = rolRepositorio.save(rol);
 
-        // Agregar el rol a la lista de roles del usuario
         usuario.getRoles().add(rolGuardado);
         usuariosRepositorio.save(usuario);
 
