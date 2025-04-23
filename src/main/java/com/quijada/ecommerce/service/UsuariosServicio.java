@@ -37,4 +37,43 @@ public class UsuariosServicio {
         return usuariosRepositorio.save(usuario);
     }
 
+    public Usuarios getUserByName(String nombre){
+        return usuariosRepositorio.findByNombre(nombre).orElseThrow(
+                () -> new IllegalArgumentException("El usuario con el nombre " + nombre + " no se encuentra")
+        );
+    }
+
+    public Usuarios getUserByEmail(String correo){
+        return usuariosRepositorio.findByCorreo(correo).orElseThrow(
+                () -> new IllegalArgumentException("El usuario con el correo " + correo + " no se encuentra")
+        );
+    }
+
+    public Usuarios deleteUserbyCorreo(String correo){
+        Optional<Usuarios> optionalUsuarios = usuariosRepositorio.findByCorreo(correo);
+        if (optionalUsuarios.isEmpty()) throw new IllegalArgumentException("El usuario con el correo " + correo + " no se encuentra");
+        usuariosRepositorio.deleteByCorreo(correo);
+        return optionalUsuarios.get();
+    }
+
+    public Usuarios updateUserByCorreo(String correo, Usuarios usuarioDetalles){
+        Optional<Usuarios> optionalUsuarios = usuariosRepositorio.findByCorreo(correo);
+        if (optionalUsuarios.isEmpty()) throw new IllegalArgumentException("El usuario con el correo " + correo + " no se encuentra");
+        Usuarios usuario = optionalUsuarios.get();
+
+        if (usuarioDetalles.getNombre() != null)usuario.setNombre(usuarioDetalles.getNombre());
+        if (usuarioDetalles.getApellido() != null)usuario.setApellido(usuarioDetalles.getApellido());
+        if (usuarioDetalles.getCorreo() != null)usuario.setCorreo(usuarioDetalles.getCorreo());
+        if (usuarioDetalles.getPassword() != null){
+            String hashedPassword = passwordEncoder.encode(usuarioDetalles.getPassword());
+            usuario.setPassword(hashedPassword);
+        }
+        return usuariosRepositorio.save(usuario);
+    }
+
+    public boolean loginUser(Usuarios usuario){
+        Optional<Usuarios>optionalUsuarios = usuariosRepositorio.findByCorreo(usuario.getCorreo());
+        if (optionalUsuarios.isEmpty()) return false;
+        return passwordEncoder.matches(usuario.getPassword(), optionalUsuarios.get().getPassword());
+    }
 }
