@@ -1,5 +1,6 @@
 package com.quijada.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_Usuarios",nullable = false, unique = true)
+        @Column(name="id_Usuarios",nullable = false, unique = true)
     private Integer idUsuarios;
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -34,5 +35,11 @@ public class Usuarios {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rol> roles= new ArrayList<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_pedidos", nullable = false)
+    @JsonBackReference
+    private Pedido pedido;
 
 }
