@@ -21,33 +21,28 @@ public class RolServicio {
         this.usuariosRepositorio = usuariosRepositorio;
     }
 
+    // Obtener todos los roles
     public List<Rol> getAllRoles() {
         return rolRepositorio.findAll();
     }
 
-    public Optional<Rol> getRolById(Integer id) {
-        return rolRepositorio.findById(id);
+    // Agregar un rol
+    public Rol addRol(Rol rol) {
+        // Verificar que el usuario existe
+        Usuarios usuario = usuariosRepositorio.findById(rol.getIdUsuario())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + rol.getIdUsuario()));
+
+        // Asignar el usuario al rol
+        rol.setUsuario(usuario);
+
+        // Guardar el rol
+        Rol rolGuardado = rolRepositorio.save(rol);
+
+        // Agregar el rol a la lista de roles del usuario
+        usuario.getRoles().add(rolGuardado);
+        usuariosRepositorio.save(usuario);
+
+        return rolGuardado;
     }
 
-    public List<Rol> getRolesByUserId(Integer idUsuario) {
-        return rolRepositorio.findByidUsuario(idUsuario);
-    }
-
-    public Rol saveRol(Rol rol) {
-        return rolRepositorio.save(rol);
-    }
-
-    public Rol assignRolToUser(Integer idUsuario, Rol rol) {
-        Optional<Usuarios> userOptional = usuariosRepositorio.findById(idUsuario);
-        if (userOptional.isPresent()) {
-            Usuarios usuario = userOptional.get();
-            rol.setUsuario(usuario);
-            return rolRepositorio.save(rol);
-        }
-        throw new RuntimeException("Usuario no encontrado con ID: " + idUsuario);
-    }
-
-    public void deleteRol(Integer id) {
-        rolRepositorio.deleteById(id);
-    }
 }

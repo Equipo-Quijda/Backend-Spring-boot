@@ -2,44 +2,39 @@ package com.quijada.ecommerce.service;
 
 
 import com.quijada.ecommerce.model.Usuarios;
+import com.quijada.ecommerce.repository.RolRepository;
 import com.quijada.ecommerce.repository.UsuariosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuariosServicio {
 
     private UsuariosRepositorio usuariosRepositorio;
+    private final PasswordEncoder passwordEncoder;
+    private final RolRepository rolRepository;
 
     @Autowired
-    public UsuariosServicio(UsuariosRepositorio usuariosRepositorio){
+    public UsuariosServicio(UsuariosRepositorio usuariosRepositorio, PasswordEncoder passwordEncoder, RolRepository rolRepository){
         this.usuariosRepositorio = usuariosRepositorio;
+        this.passwordEncoder = passwordEncoder;
+        this.rolRepository = rolRepository;
     }
 
-    public Usuarios create(Usuarios usuario) {
-        return usuariosRepositorio.save(usuario); 
-    }
-
-    public List<Usuarios> getAll() {
+    public List<Usuarios> getAllUsers() {
         return usuariosRepositorio.findAll();
     }
 
-    public Usuarios getById(Integer id) {
-        return usuariosRepositorio.findById(id).orElse(null);
+    public Usuarios addUser(Usuarios usuario){
+        Optional<Usuarios> optionalUsuarios = usuariosRepositorio.findByCorreo(usuario.getCorreo());
+        if (optionalUsuarios.isPresent()) throw new IllegalArgumentException("El correo ya existe");
+        String hashedPassword = passwordEncoder.encode(usuario.getPassword());
+        usuario.setPassword(hashedPassword);
+        return usuariosRepositorio.save(usuario);
     }
 
-    public Usuarios update(Integer id, Usuarios usuario) {
-        Usuarios usuarioExistente = usuariosRepositorio.findById(id).orElse(null);
-        if (usuarioExistente != null) {
-            usuario.setIdUsuarios(id);
-            return usuariosRepositorio.save(usuario);
-        }
-        return null;
-    }
-
-    public void delete(Integer id) {
-        usuariosRepositorio.deleteById(id);
-    }
 }
