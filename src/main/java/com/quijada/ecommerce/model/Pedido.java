@@ -1,6 +1,7 @@
 package com.quijada.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
@@ -41,4 +43,8 @@ public class Pedido {
     @JoinColumn(name = "productos", nullable = false)
     @JsonBackReference
     private Productos productos;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Usuarios> usuario;
 }

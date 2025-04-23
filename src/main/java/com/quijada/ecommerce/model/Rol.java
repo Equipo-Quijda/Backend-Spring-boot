@@ -21,10 +21,10 @@ public class Rol {
     @Column(name = "idRol", unique = true, nullable = false)
     private Integer idRol;
 
-    @Column(nullable = false)
+    @Column(name = "nombre",nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @ManyToOne
