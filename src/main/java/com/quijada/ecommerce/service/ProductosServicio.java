@@ -66,7 +66,7 @@ public class ProductosServicio {
         if (detallesProducto.getPrecio() != null)producto.setPrecio(detallesProducto.getPrecio());
         if (detallesProducto.getInventario() != null)producto.setInventario(detallesProducto.getInventario());
         if (detallesProducto.getImagen_url() != null)producto.setImagen_url(detallesProducto.getImagen_url());
-        if (detallesProducto.getId_categoria() != null)producto.setId_categoria(detallesProducto.getId_categoria());
+//        if (detallesProducto.getId_categoria() != null)producto.setId_categoria(detallesProducto.getId_categoria());
         return productosRepositorio.save(producto);
     }
 
