@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/productos";
+const API_URL = "http://localhost:8080/productos";
 let productoSeleccionado = null;  // Variable global para el producto seleccionado
 
 //Inician validaciones
@@ -61,6 +61,7 @@ function cargarProductos() {
         .then(response => response.json())
         .then(productos => {
             const lista = document.getElementById("lista-productos");
+            Console.log(productos)
             lista.innerHTML = ""; // Limpiar lista antes de agregar productos
 
             productos.forEach(producto => {

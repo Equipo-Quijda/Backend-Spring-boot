@@ -19,7 +19,7 @@ import java.util.List;
 public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name="id_Usuarios",nullable = false, unique = true)
+        @Column(name="id_Usuario",nullable = false, unique = true)
     private Integer idUsuarios;
     @Column(name = "nombre", nullable = false)
     private String nombre;

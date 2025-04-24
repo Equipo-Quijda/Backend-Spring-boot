@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3000/productos";
-        let rutaJson = '../productos.json';
+const API_URL = "http://localhost:8080/productos";
+        let rutaJson = API_URL;
         let containerSelector = '.container-productos';
         let productoSeleccionado = null;  // Variable global para el producto seleccionado
 
@@ -14,6 +14,7 @@ const API_URL = "http://localhost:3000/productos";
             // Intentamos cargar productos desde el backend API (JSON Server)
             try {
                 let response = await fetch(API_URL);
+                Console.log(response)
                 if (response.ok) {
                     let productos = await response.json();
                     container.innerHTML = '';  // Limpiar el contenedor antes de agregar los productos
@@ -32,19 +33,19 @@ const API_URL = "http://localhost:3000/productos";
         }
 
         // Cargar productos desde el archivo JSON local
-        async function cargarProductosDesdeJsonLocal(rutaJson, container) {
-            try {
-                const response = await fetch(rutaJson);
-                const productos = await response.json();
-                container.innerHTML = '';  // Limpiar el contenedor antes de agregar los productos
-                productos.productos.forEach(prod => {
-                    const tarjeta = crearTarjetaProducto(prod);
-                    container.appendChild(tarjeta);
-                });
-            } catch (error) {
-                console.error('Error al cargar el archivo JSON local:', error);
-            }
-        }
+//        async function cargarProductosDesdeJsonLocal(rutaJson, container) {
+//            try {
+//                const response = await fetch(rutaJson);
+//                const productos = await response.json();
+//                container.innerHTML = '';  // Limpiar el contenedor antes de agregar los productos
+//                productos.productos.forEach(prod => {
+//                    const tarjeta = crearTarjetaProducto(prod);
+//                    container.appendChild(tarjeta);
+//                });
+//            } catch (error) {
+//                console.error('Error al cargar el archivo JSON local:', error);
+//            }
+//        }
 
         // Crear tarjeta de producto
         function crearTarjetaProducto(producto) {
