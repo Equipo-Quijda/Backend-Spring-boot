@@ -22,7 +22,7 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedidos", nullable = false, unique = true)
-    private Integer id_pedidos;
+    private Integer id;
 
     @Column(name = "fecha_registro", nullable = false)
     private Timestamp fecha_registro;
