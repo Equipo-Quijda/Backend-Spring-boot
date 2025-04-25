@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/roles")
+@CrossOrigin(origins = "http://localhost:5501")
 public class RolControlador {
 
     private final RolServicio rolServicio;

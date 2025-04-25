@@ -33,13 +33,6 @@ public class Usuarios {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rol> roles= new ArrayList<>();
-
-
-    @ManyToOne
-    @JoinColumn(name = "id_pedidos", nullable = false)
-    @JsonBackReference
-    private Pedido pedido;
-
+    @Column(name = "rol_id", nullable = false)
+    private Integer rolId;
 }

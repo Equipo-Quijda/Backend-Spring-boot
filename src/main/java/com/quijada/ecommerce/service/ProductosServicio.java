@@ -30,8 +30,7 @@ public class ProductosServicio {
             Categorias categoria = categoriasRepository.findById(producto.getId_categoria())
                     .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
             producto.setCategorias(categoria);
-            categoria.getProductos().add(producto);
-            //producto.setId_categoria(categoria.setId_categoria());
+
         }
         return productosRepositorio.save(producto);
     }

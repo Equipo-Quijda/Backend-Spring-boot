@@ -25,8 +25,4 @@ public class Categorias {
     @Column(name = "nombre",nullable = false)
     private String nombre;
 
-    @OneToMany(mappedBy = "categorias", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Productos> productos = new ArrayList<>();
-
 }

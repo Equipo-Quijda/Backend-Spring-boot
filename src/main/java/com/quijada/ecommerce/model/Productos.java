@@ -45,9 +45,9 @@ public class Productos {
     @JsonBackReference
     private Categorias categorias;
 
-    @OneToMany(mappedBy = "productos", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Pedido> pedido;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
 
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

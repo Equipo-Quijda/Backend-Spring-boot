@@ -29,14 +29,7 @@ public class RolServicio {
     // Agregar un rol
     public Rol addRol(Rol rol) {
 
-        Usuarios usuario = usuariosRepositorio.findById(rol.getIdUsuario())
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + rol.getIdUsuario()));
-
-        rol.setUsuario(usuario);
         Rol rolGuardado = rolRepositorio.save(rol);
-
-        usuario.getRoles().add(rolGuardado);
-        usuariosRepositorio.save(usuario);
 
         return rolGuardado;
     }
