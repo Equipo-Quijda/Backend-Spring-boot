@@ -1,6 +1,7 @@
 package com.quijada.ecommerce.controller;
 
 
+import com.quijada.ecommerce.model.Login;
 import com.quijada.ecommerce.model.Usuarios;
 import com.quijada.ecommerce.service.UsuariosServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,13 @@ public class UsuariosControlador {
         return usuariosServicio.getUserByName(nombre);
     }
 
+    @GetMapping(path = "/id/{id}")
+    public Usuarios getUserById(@PathVariable("id") int Id) {
+        Usuarios usuario = usuariosServicio.getUserById(Id);
+        usuario.setPassword(null);
+        return usuario;
+    }
+
     @GetMapping(path = "/correo/{correo}")
     public Usuarios getUserByEmail(@PathVariable("correo") String correo) {
         return usuariosServicio.getUserByEmail(correo);
@@ -45,14 +53,23 @@ public class UsuariosControlador {
         return ResponseEntity.ok("Se eliminó la cuenta con el correo " + correo);
     }
 
-    @PutMapping(path = "{correo}")
-    public ResponseEntity<String> updateUserByCorreo(@PathVariable("correo") String correo, @RequestBody Usuarios usuario){
-        usuariosServicio.updateUserByCorreo(correo,usuario);
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<String> updateUserById(@PathVariable("id") Integer id, @RequestBody Usuarios usuario){
+        usuariosServicio.updateUserById(id, usuario);
         return ResponseEntity.ok("Se actualizó correctamente el usuario");
     }
 
-    @PostMapping(path = "{login}")
-    public boolean loginUser(@RequestBody Usuarios usuario){
-        return usuariosServicio.loginUser(usuario);
+    @PostMapping(path = "/login")
+    public Usuarios loginUser(@RequestBody Login login){
+        if( !usuariosServicio.loginUser(login)){
+            throw new RuntimeException("Intente de nuevo");
+        }
+
+        Usuarios usuario = usuariosServicio.getUserByEmail(login.getCorreo());
+
+        usuario.setPassword("0");
+
+        return usuario;
     }
+
 }

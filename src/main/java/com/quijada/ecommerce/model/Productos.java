@@ -40,17 +40,7 @@ public class Productos {
     @Column(name = "imagen_url", nullable = false)
     private String imagen_url;
 
-    @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false)
-    @JsonBackReference
-    private Categorias categorias;
-
-    @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
-    private Pedido pedido;
-
-    @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Integer id_categoria;  // Campo temporal para el JSON
+    @Column(name = "id_categoria", nullable = false)
+    private Integer id_categoria;
 
 }

@@ -39,9 +39,8 @@ public class Pedido {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Productos> productos;
+    @Column(name = "productos", nullable = false)
+    private String productos;
 
     @Column(name = "usuario_id", nullable = false)
     private Integer usuario_id;

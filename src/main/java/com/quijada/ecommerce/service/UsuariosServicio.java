@@ -1,6 +1,7 @@
 package com.quijada.ecommerce.service;
 
 
+import com.quijada.ecommerce.model.Login;
 import com.quijada.ecommerce.model.Usuarios;
 import com.quijada.ecommerce.repository.RolRepository;
 import com.quijada.ecommerce.repository.UsuariosRepositorio;
@@ -71,9 +72,30 @@ public class UsuariosServicio {
         return usuariosRepositorio.save(usuario);
     }
 
-    public boolean loginUser(Usuarios usuario){
-        Optional<Usuarios>optionalUsuarios = usuariosRepositorio.findByCorreo(usuario.getCorreo());
+    public Usuarios updateUserById(int usuario_id, Usuarios usuarioDetalles){
+        Optional<Usuarios> optionalUsuarios = usuariosRepositorio.findById(usuario_id);
+        if (optionalUsuarios.isEmpty()) throw new IllegalArgumentException("El usuario no se encuentra");
+        Usuarios usuario = optionalUsuarios.get();
+        if (usuarioDetalles.getNombre() != null)usuario.setNombre(usuarioDetalles.getNombre());
+        if (usuarioDetalles.getApellido() != null)usuario.setApellido(usuarioDetalles.getApellido());
+        if (usuarioDetalles.getCorreo() != null)usuario.setCorreo(usuarioDetalles.getCorreo());
+        if (usuarioDetalles.getPassword() != null){
+            String hashedPassword = passwordEncoder.encode(usuarioDetalles.getPassword());
+            usuario.setPassword(hashedPassword);
+        }
+        return usuariosRepositorio.save(usuario);
+
+    }
+
+    public Usuarios getUserById(int usuario_id){
+        Optional<Usuarios> optionalUsuarios = usuariosRepositorio.findById(usuario_id);
+        if (optionalUsuarios.isEmpty()) throw new IllegalArgumentException("El usuario no se encuentra");
+        return optionalUsuarios.get();
+    }
+
+    public boolean loginUser(Login login){
+        Optional<Usuarios>optionalUsuarios = usuariosRepositorio.findByCorreo(login.getCorreo());
         if (optionalUsuarios.isEmpty()) return false;
-        return passwordEncoder.matches(usuario.getPassword(), optionalUsuarios.get().getPassword());
+        return passwordEncoder.matches(login.getPassword(), optionalUsuarios.get().getPassword());
     }
 }
