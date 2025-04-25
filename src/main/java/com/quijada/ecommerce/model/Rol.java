@@ -1,7 +1,5 @@
 package com.quijada.ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,14 +24,5 @@ public class Rol {
 
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
-
-    @ManyToOne
-    @JoinColumn(name = "id_Usuario", nullable = false)
-    @JsonBackReference
-    private Usuarios usuario;
-
-    @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Integer idUsuario;
 
 }
