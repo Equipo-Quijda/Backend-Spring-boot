@@ -1,6 +1,8 @@
 package com.quijada.ecommerce.service;
 
+import com.quijada.ecommerce.model.Categorias;
 import com.quijada.ecommerce.model.Productos;
+import com.quijada.ecommerce.repository.CategoriasRepository;
 import com.quijada.ecommerce.repository.ProductosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +14,18 @@ import java.util.Optional;
 @Service
 public class ProductosServicio {
     private final ProductosRepositorio productosRepositorio;
+    private final CategoriasRepository categoriasRepository;
 
     @Autowired
-    public ProductosServicio(ProductosRepositorio productosRepositorio) { this.productosRepositorio = productosRepositorio;}
+    public ProductosServicio(ProductosRepositorio productosRepositorio, CategoriasRepository categoriasRepository) {
+        this.productosRepositorio = productosRepositorio;
+        this.categoriasRepository = categoriasRepository;
+    }
 
     public List<Productos> listarProductos () { return productosRepositorio.findAll();}
 
     // Agregar un nuevo producto
-    public Productos agregarProducto(Productos producto){
+    public Productos agregarProducto(Productos producto) {
         return productosRepositorio.save(producto);
     }
 
@@ -41,7 +47,6 @@ public class ProductosServicio {
     @Transactional
     public void borrarProductoNombre(String nombre) {
         productosRepositorio.deleteByNombre(nombre);
-
     }
 
     // Borrar producto por ID
@@ -69,8 +74,6 @@ public class ProductosServicio {
         if (detallesProducto.getId_categoria() != null)producto.setId_categoria(detallesProducto.getId_categoria());
         return productosRepositorio.save(producto);
     }
-
-
 }
 
 

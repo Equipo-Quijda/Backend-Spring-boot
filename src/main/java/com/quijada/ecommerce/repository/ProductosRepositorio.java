@@ -10,6 +10,4 @@ public interface ProductosRepositorio extends JpaRepository<Productos, Integer> 
     Optional<Productos> findByNombre(String nombre);
     public void deleteByNombre(String nombre);
 
-
-
 }
